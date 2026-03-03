@@ -198,14 +198,20 @@
 
     // ユーザーの最初の操作でBGMを再生開始
     var bgmStarted = false;
+    bgm.addEventListener('playing', function() {
+      bgmPlaying = true;
+      bgmStarted = true;
+      bgmToggleBtn.textContent = '🔊';
+      bgmToggleBtn.classList.remove('off');
+    });
+    bgm.addEventListener('pause', function() {
+      bgmPlaying = false;
+      bgmToggleBtn.textContent = '🔇';
+      bgmToggleBtn.classList.add('off');
+    });
     document.addEventListener('click', function() {
       if (!bgmStarted) {
-        bgm.play().then(function() {
-          bgmPlaying = true;
-          bgmStarted = true;
-          bgmToggleBtn.textContent = '🔊';
-          bgmToggleBtn.classList.remove('off');
-        }).catch(function() {});
+        bgm.play().catch(function() {});
       }
     }, { once: true });
 
